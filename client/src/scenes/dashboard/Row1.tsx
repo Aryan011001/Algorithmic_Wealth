@@ -17,10 +17,31 @@ import {
   Tooltip,
   Area,
 } from "recharts";
+// import { CircularProgress } from "@mui/material";
 
 const Row1 = () => {
   const { palette } = useTheme();
-  const { data } = useGetKpisQuery();
+  const { data, isLoading, error } = useGetKpisQuery();
+
+  // if (isLoading) {
+  //   return (
+  //     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+  //       <CircularProgress />
+  //     </div>
+  //   );
+  // }
+
+  console.log("Data:", data);
+  console.log("Error:", error);
+  // console.log("Loading:", isLoading);
+
+  if (error) {
+    return <p>Error fetching data. Please check the console for more information.</p>;
+  }
+
+  if (!data) {
+    return <p>Data not available.</p>;
+  }
 
   const revenue = useMemo(() => {
     return (
@@ -58,6 +79,11 @@ const Row1 = () => {
       })
     );
   }, [data]);
+
+  console.log('revenueExpenses', revenueExpenses);
+  console.log('revenueProfit', revenueProfit);
+  console.log('revenue', revenue);
+
 
   return (
     <>
